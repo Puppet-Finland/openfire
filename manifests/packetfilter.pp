@@ -9,6 +9,8 @@ class openfire::packetfilter
     $chat_allow_addresses_ipv6,
     $federate_allow_addresses_ipv4,
     $federate_allow_addresses_ipv6,
+    $filetransfer_allow_addresses_ipv4,
+    $filetransfer_allow_addresses_ipv6,
     $admin_allow_addresses_ipv4,
     $admin_allow_addresses_ipv6
 )
@@ -21,7 +23,12 @@ class openfire::packetfilter
     openfire::packetfilter::federate_allow_ipv4 { $federate_allow_addresses_ipv4: }
     openfire::packetfilter::federate_allow_ipv6 { $federate_allow_addresses_ipv6: }
 
+    # Connections to the file transfer proxy service
+    openfire::packetfilter::filetransfer_allow_ipv4 { $filetransfer_allow_addresses_ipv4: }
+    openfire::packetfilter::filetransfer_allow_ipv6 { $filetransfer_allow_addresses_ipv6: }
+
     # Connections to the admin interface
     openfire::packetfilter::admin_allow_ipv4 { $admin_allow_addresses_ipv4: }
     openfire::packetfilter::admin_allow_ipv6 { $admin_allow_addresses_ipv6: }
+
 }

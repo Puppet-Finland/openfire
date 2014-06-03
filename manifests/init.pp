@@ -14,6 +14,8 @@ class openfire
     $chat_allow_addresses_ipv6 = ['::1'],
     $federate_allow_addresses_ipv4 = ['127.0.0.1'],
     $federate_allow_addresses_ipv6 = ['::1'],
+    $filetransfer_allow_addresses_ipv4 = ['127.0.0.1'],
+    $filetransfer_allow_addresses_ipv6 = ['::1'],
     $admin_allow_addresses_ipv4 = ['127.0.0.1'],
     $admin_allow_addresses_ipv6 = ['::1'],
     $monitor_email = $::servermonitor
@@ -31,6 +33,8 @@ class openfire
             chat_allow_addresses_ipv6 => $chat_allow_addresses_ipv6,
             federate_allow_addresses_ipv4 => $federate_allow_addresses_ipv4,
             federate_allow_addresses_ipv6 => $federate_allow_addresses_ipv6,
+            filetransfer_allow_addresses_ipv4 => $filetransfer_allow_addresses_ipv4,
+            filetransfer_allow_addresses_ipv6 => $filetransfer_allow_addresses_ipv6,
             admin_allow_addresses_ipv4 => $admin_allow_addresses_ipv4,
             admin_allow_addresses_ipv6 => $admin_allow_addresses_ipv6,
         }
