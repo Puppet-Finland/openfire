@@ -6,7 +6,8 @@
 class openfire::monit
 (
     $monitor_email
-)
+
+) inherits openfire::params
 {
     monit::fragment { 'openfire-openfire.monit':
         modulename => 'openfire',

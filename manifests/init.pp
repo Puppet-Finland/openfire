@@ -38,8 +38,7 @@
 #
 # == License
 #
-# BSD-lisence
-# See file LICENSE for details
+# BSD-license. See file LICENSE for details.
 #
 class openfire
 (
@@ -52,10 +51,10 @@ class openfire
     $admin_allow_addresses_ipv4 = ['127.0.0.1'],
     $admin_allow_addresses_ipv6 = ['::1'],
     $monitor_email = $::servermonitor
-)
+
+) inherits openfire::params
 {
 
-    # This is currently an empty class
     include openfire::install
 
     include openfire::service

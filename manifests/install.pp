@@ -1,14 +1,27 @@
 #
 # == Class: openfire::install
 #
-# This class ensures OpenFire is installed.
+# This class fetches and installs OpenFire.
 #
-# Currently this is just a dummy class which can be included.
-#
-class openfire::install {
+class openfire::install inherits openfire::params
+{
+    include os::params
 
-    include openfire::params
+    exec { 'openfire-fetch':
+        command => "wget ${::openfire::params::package_baseurl}/${::openfire::params::package_name}",
+        cwd => "${::openfire::params::basedir}",
+        path => ['/bin', '/usr/bin', '/usr/local/bin', '/sbin/', '/usr/sbin', '/usr/local/sbin' ],
+        creates => "${::openfire::params::basedir}/${::openfire::params::package_name}",
+        user => root,
+        timeout => 600,
+    }
 
-    # TODO
+    exec { 'openfire-install':
+        command => "${::os::params::package_install_cmd} ${::openfire::params::basedir}/${::openfire::params::package_name}",
+        path => ['/bin', '/usr/bin', '/usr/local/bin', '/sbin/', '/usr/sbin', '/usr/local/sbin' ],
+        creates => "${::openfire::params::install_dir}",
+        user => root,
+        require => Exec['openfire-fetch'],
+    }
 }
 

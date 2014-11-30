@@ -3,9 +3,7 @@
 #
 # Ensure OpenFire starts on boot
 #
-class openfire::service {
-
-    include openfire::params
+class openfire::service inherits openfire::params {
 
     service { 'openfire':
         name => "${::openfire::params::service_name}",

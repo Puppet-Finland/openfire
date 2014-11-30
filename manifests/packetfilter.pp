@@ -13,7 +13,8 @@ class openfire::packetfilter
     $filetransfer_allow_addresses_ipv6,
     $admin_allow_addresses_ipv4,
     $admin_allow_addresses_ipv6
-)
+
+) inherits openfire::params
 {
     # Client connections
     openfire::packetfilter::chat_allow_ipv4 { $chat_allow_addresses_ipv4: }
