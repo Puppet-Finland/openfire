@@ -17,7 +17,7 @@ class openfire::params {
             $pidfile = '/var/run/openfire.pid'
         }
         'Debian': {
-            $basedir = '/opt'
+            $basedir = '/usr/share/'
             $install_dir = "$basedir/openfire"
             $package_baseurl = 'http://download.igniterealtime.org/openfire'
             $package_name = 'openfire_3.9.3_all.deb'
