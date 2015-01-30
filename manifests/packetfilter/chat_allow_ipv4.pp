@@ -16,4 +16,16 @@ define openfire::packetfilter::chat_allow_ipv4 {
         dport => 5222,
         action => 'accept',
     }
+
+    firewall { "012 ipv4 accept openfire chat clients over SSL from ${title}":
+        provider => 'iptables',
+        chain  => 'INPUT',
+        proto => 'tcp',
+        source => $title ? {
+            'any' => undef,
+            default => $title,
+        },
+        dport => 5223,
+        action => 'accept',
+    }
 }
