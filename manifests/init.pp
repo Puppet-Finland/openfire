@@ -10,6 +10,8 @@
 #
 # == Parameters
 #
+# [*manage*]
+#   Manage OpenFire using Puppet. Valid values are 'yes' (default) and 'no'.
 # [*chat_allow_addresses_ipv4*]
 #   An array of IPv4 addresses from which to allow client-to-server connections to port 
 #   5222. Defaults to ['127.0.0.1']. 
@@ -42,6 +44,7 @@
 #
 class openfire
 (
+    $manage = 'yes',
     $chat_allow_addresses_ipv4 = ['127.0.0.1'],
     $chat_allow_addresses_ipv6 = ['::1'],
     $federate_allow_addresses_ipv4 = ['127.0.0.1'],
@@ -55,26 +58,29 @@ class openfire
 ) inherits openfire::params
 {
 
-    include openfire::install
+if $manage == 'yes' {
 
-    include openfire::service
+    include ::openfire::install
+
+    include ::openfire::service
 
     if tagged('packetfilter') {
-        class { 'openfire::packetfilter':
-            chat_allow_addresses_ipv4 => $chat_allow_addresses_ipv4,
-            chat_allow_addresses_ipv6 => $chat_allow_addresses_ipv6,
-            federate_allow_addresses_ipv4 => $federate_allow_addresses_ipv4,
-            federate_allow_addresses_ipv6 => $federate_allow_addresses_ipv6,
+        class { '::openfire::packetfilter':
+            chat_allow_addresses_ipv4         => $chat_allow_addresses_ipv4,
+            chat_allow_addresses_ipv6         => $chat_allow_addresses_ipv6,
+            federate_allow_addresses_ipv4     => $federate_allow_addresses_ipv4,
+            federate_allow_addresses_ipv6     => $federate_allow_addresses_ipv6,
             filetransfer_allow_addresses_ipv4 => $filetransfer_allow_addresses_ipv4,
             filetransfer_allow_addresses_ipv6 => $filetransfer_allow_addresses_ipv6,
-            admin_allow_addresses_ipv4 => $admin_allow_addresses_ipv4,
-            admin_allow_addresses_ipv6 => $admin_allow_addresses_ipv6,
+            admin_allow_addresses_ipv4        => $admin_allow_addresses_ipv4,
+            admin_allow_addresses_ipv6        => $admin_allow_addresses_ipv6,
         }
     }
 
     if tagged('monit') {
-        class { 'openfire::monit':
+        class { '::openfire::monit':
             monitor_email => $monitor_email,
         }
     }
+}
 }
