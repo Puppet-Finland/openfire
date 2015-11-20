@@ -10,6 +10,7 @@ class openfire::monit
 ) inherits openfire::params
 {
     monit::fragment { 'openfire-openfire.monit':
+        basename   => 'openfire',
         modulename => 'openfire',
     }
 }
