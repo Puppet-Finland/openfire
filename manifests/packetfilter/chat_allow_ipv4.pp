@@ -10,21 +10,23 @@ define openfire::packetfilter::chat_allow_ipv4 {
         default => $title,
     }
 
-    firewall { "012 ipv4 accept openfire chat clients from ${title}":
+    @firewall { "012 ipv4 accept openfire chat clients from ${title}":
         provider => 'iptables',
         chain    => 'INPUT',
         proto    => 'tcp',
         source   => $source_v4,
         dport    => 5222,
         action   => 'accept',
+        tag      => 'default',
     }
 
-    firewall { "012 ipv4 accept openfire chat clients over SSL from ${title}":
+    @firewall { "012 ipv4 accept openfire chat clients over SSL from ${title}":
         provider => 'iptables',
         chain    => 'INPUT',
         proto    => 'tcp',
         source   => $source_v4,
         dport    => 5223,
         action   => 'accept',
+        tag      => 'default',
     }
 }

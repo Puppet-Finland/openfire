@@ -10,12 +10,13 @@ define openfire::packetfilter::filetransfer_allow_ipv4 {
         default => $title,
     }
 
-    firewall { "012 ipv4 accept openfire file transfer from ${title}":
+    @firewall { "012 ipv4 accept openfire file transfer from ${title}":
         provider => 'iptables',
         chain    => 'INPUT',
         proto    => 'tcp',
         source   => $source_v4,
         dport    => 7777,
         action   => 'accept',
+        tag      => 'default',
     }
 }

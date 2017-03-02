@@ -10,12 +10,13 @@ define openfire::packetfilter::admin_allow_ipv4 {
         default => $title,
     }
 
-    firewall { "012 ipv4 accept openfire admin ui from ${title}":
+    @firewall { "012 ipv4 accept openfire admin ui from ${title}":
         provider => 'iptables',
         chain    => 'INPUT',
         proto    => 'tcp',
         source   => $source_v4,
         dport    => 9090,
         action   => 'accept',
+        tag      => 'default',
     }
 }

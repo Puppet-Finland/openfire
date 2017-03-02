@@ -11,7 +11,9 @@
 # == Parameters
 #
 # [*manage*]
-#   Manage OpenFire using Puppet. Valid values are 'yes' (default) and 'no'.
+#   Manage OpenFire using Puppet. Valid values are true (default) and false.
+# [*manage_packetfilter*]
+#   Manage packet filtering rules. Valid values are true (default) and false.
 # [*chat_allow_addresses_ipv4*]
 #   An array of IPv4 addresses from which to allow client-to-server connections to port 
 #   5222. Defaults to ['127.0.0.1']. 
@@ -44,27 +46,28 @@
 #
 class openfire
 (
-    $manage = 'yes',
-    $chat_allow_addresses_ipv4 = ['127.0.0.1'],
-    $chat_allow_addresses_ipv6 = ['::1'],
-    $federate_allow_addresses_ipv4 = ['127.0.0.1'],
-    $federate_allow_addresses_ipv6 = ['::1'],
-    $filetransfer_allow_addresses_ipv4 = ['127.0.0.1'],
-    $filetransfer_allow_addresses_ipv6 = ['::1'],
-    $admin_allow_addresses_ipv4 = ['127.0.0.1'],
-    $admin_allow_addresses_ipv6 = ['::1'],
-    $monitor_email = $::servermonitor
+    Boolean $manage = true,
+    Boolean $manage_packetfilter = true,
+            $chat_allow_addresses_ipv4 = ['127.0.0.1'],
+            $chat_allow_addresses_ipv6 = ['::1'],
+            $federate_allow_addresses_ipv4 = ['127.0.0.1'],
+            $federate_allow_addresses_ipv6 = ['::1'],
+            $filetransfer_allow_addresses_ipv4 = ['127.0.0.1'],
+            $filetransfer_allow_addresses_ipv6 = ['::1'],
+            $admin_allow_addresses_ipv4 = ['127.0.0.1'],
+            $admin_allow_addresses_ipv6 = ['::1'],
+            $monitor_email = $::servermonitor
 
 ) inherits openfire::params
 {
 
-if $manage == 'yes' {
+if $manage {
 
     include ::openfire::install
 
     include ::openfire::service
 
-    if tagged('packetfilter') {
+    if $manage_packetfilter {
         class { '::openfire::packetfilter':
             chat_allow_addresses_ipv4         => $chat_allow_addresses_ipv4,
             chat_allow_addresses_ipv6         => $chat_allow_addresses_ipv6,
